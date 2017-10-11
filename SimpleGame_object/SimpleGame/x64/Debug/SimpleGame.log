@@ -1,5 +1,4 @@
-﻿  object.cpp
-  SimpleGame.cpp
-  코드를 생성하고 있습니다...
+﻿  SimpleGame.cpp
+c:\users\user\documents\github\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(47): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   SimpleGame.vcxproj -> C:\Users\USER\Documents\GitHub\GSE_2_2015180018\SimpleGame_object\x64\Debug\SimpleGame.exe
   SimpleGame.vcxproj -> C:\Users\USER\Documents\GitHub\GSE_2_2015180018\SimpleGame_object\x64\Debug\SimpleGame.pdb (Partial PDB)

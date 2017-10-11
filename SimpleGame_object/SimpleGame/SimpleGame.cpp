@@ -18,6 +18,7 @@ but WITHOUT ANY WARRANTY.
 
 Renderer *g_Renderer = NULL;
 Object *g_Object = NULL;
+Object *m_Object = NULL;
 
 void RenderScene(void)
 {
@@ -34,11 +35,16 @@ void RenderScene(void)
 void Idle(void)
 {
 	RenderScene();
+	g_Object->UpdateObject(g_Object->getX(), g_Object->getY(), g_Object->getZ(), g_Object->getSize(), g_Object->getStatus(), g_Object->getSpeed());
+
+	// std::cout << g_Object->getX() << ", " << g_Object->getY() << std::endl;
+
 }
 
 void MouseInput(int button, int state, int x, int y)
 {
 	RenderScene();
+	g_Object->CreateObject(x, y, 0.0f, 10.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.01f);
 }
 
 void KeyInput(unsigned char key, int x, int y)
@@ -77,7 +83,8 @@ int main(int argc, char **argv)
 		std::cout << "Renderer could not be initialized.. \n";
 	}
 
-	g_Object = new Object(10.0f, 10.0f, 0.0f, 10.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+	g_Object = new Object(10.0f, 10.0f, 0.0f, 10.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f);
+	//m_Object = new Object(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f);
 
 	glutDisplayFunc(RenderScene);
 	glutIdleFunc(Idle);
@@ -90,7 +97,7 @@ int main(int argc, char **argv)
 	delete g_Renderer;
 
 	//
-
+	delete g_Object;
     return 0;
 }
 
