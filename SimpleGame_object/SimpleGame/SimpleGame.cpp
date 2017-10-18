@@ -12,13 +12,15 @@ but WITHOUT ANY WARRANTY.
 #include <iostream>
 #include "Dependencies\glew.h"
 #include "Dependencies\freeglut.h"
+#include <ctime>
 
 #include "Renderer.h"
 #include "object.h"
-
+#include "SceneMgr.h"
+#define MAX_OBJECTS_COUNT 10
 Renderer *g_Renderer = NULL;
-Object *g_Object = NULL;
-Object *m_Object = NULL;
+SceneMgr *g_SceneMgr;
+//Object *m_objects[MAX_OBJECTS_COUNT];
 
 void RenderScene(void)
 {
@@ -26,8 +28,10 @@ void RenderScene(void)
 	glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
 
 	// Renderer Test
-	g_Renderer->DrawSolidRect(g_Object->getX(), g_Object->getY(), g_Object->getZ(), g_Object->getSize(), g_Object->getR(), g_Object->getG(), g_Object->getB(), g_Object->getA());
-
+	for (int i = 0; i < MAX_OBJECTS_COUNT; ++i) {
+		if (m_objects[i]->getStatus() == 1)
+			g_Renderer->DrawSolidRect(m_objects[i]->getX(), m_objects[i]->getY(), m_objects[i]->getZ(), m_objects[i]->getSize(), m_objects[i]->getR(), m_objects[i]->getG(), m_objects[i]->getB(), m_objects[i]->getA());
+	}
 	glutSwapBuffers();
 }
 
@@ -35,16 +39,25 @@ void RenderScene(void)
 void Idle(void)
 {
 	RenderScene();
-	g_Object->UpdateObject(g_Object->getX(), g_Object->getY(), g_Object->getZ(), g_Object->getSize(), g_Object->getStatus(), g_Object->getSpeed());
-
-	// std::cout << g_Object->getX() << ", " << g_Object->getY() << std::endl;
+	for (int i = 0; i < MAX_OBJECTS_COUNT; ++i) {
+		if(m_objects[i]->getStatus() == 1)
+			m_objects[i]->UpdateObject(m_objects[i]->getX(), m_objects[i]->getY(), m_objects[i]->getZ(), m_objects[i]->getSize(), m_objects[i]->getStatus(), m_objects[i]->getSpeed());
+	}
+	// std::cout << m_objects[i]->getX() << ", " << m_objects[i]->getY() << std::endl;
 
 }
 
 void MouseInput(int button, int state, int x, int y)
 {
 	RenderScene();
-	g_Object->CreateObject(x, y, 0.0f, 10.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.01f);
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	{
+		// m_objects[0]->CreateObject(x - 250, 250 - y, 0.0f, 10.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.01f);
+		//m_objects[0] = new Object((float)(x - 250), (float)(250 - y), 0.0f, 10.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.01f);
+		//++i;
+		//g_LButtonDown = true;
+	}
+
 }
 
 void KeyInput(unsigned char key, int x, int y)
@@ -82,10 +95,16 @@ int main(int argc, char **argv)
 	{
 		std::cout << "Renderer could not be initialized.. \n";
 	}
+	srand((unsigned)time(NULL));
+	int x, y;
+	for (int i = 0; i < MAX_OBJECTS_COUNT; ++i)
+	{
+		x = rand() % 500;
+		y = rand() % 500;
+		m_objects[i] = new Object((float)(x - 250), (float)(250 - y), 0.0f, 10.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.01f);
+	}
 
-	g_Object = new Object(10.0f, 10.0f, 0.0f, 10.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f);
-	//m_Object = new Object(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f);
-
+	
 	glutDisplayFunc(RenderScene);
 	glutIdleFunc(Idle);
 	glutKeyboardFunc(KeyInput);
@@ -97,7 +116,11 @@ int main(int argc, char **argv)
 	delete g_Renderer;
 
 	//
-	delete g_Object;
-    return 0;
+	for (int i = 0; i < MAX_OBJECTS_COUNT; ++i)
+	{
+//		if(m_objects[i]->getStatus == 1)
+//			delete m_objects[i];
+	}
+	return 0;
 }
 

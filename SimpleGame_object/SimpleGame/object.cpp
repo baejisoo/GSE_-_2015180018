@@ -7,8 +7,8 @@ Object::~Object() {
 
 }
 
-Object::Object(float setX, float setY, float setZ, float setSize, float red, float green, float blue, float alpha, float setStatus, float speed) {
-	SetObjectPosition(setX, setY, setZ, setSize, red,  green, blue, alpha, setStatus, speed);
+Object::Object(float setX, float setY, float setZ, float setSize, float red, float green, float blue, float alpha, float status, float speed) {
+	SetObjectPosition(setX, setY, setZ, setSize, red, green, blue, alpha, status, speed);
 }
 
 void Object::SetObjectPosition(float setX, float setY, float setZ, float setSize, float red, float green, float blue, float alpha, float setStatus, float setSpeed) {
