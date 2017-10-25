@@ -1,27 +1,2 @@
-﻿  SimpleGame.cpp
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(32): error C2065: 'm_objects': 선언되지 않은 식별자입니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(32): error C2227: '->getStatus' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(33): error C2065: 'm_objects': 선언되지 않은 식별자입니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(33): error C2227: '->getX' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(33): error C2227: '->getY' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(33): error C2227: '->getZ' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(33): error C2227: '->getSize' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(33): error C2227: '->getR' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(33): error C2227: '->getG' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(33): error C2227: '->getB' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(33): error C2227: '->getA' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(33): error C2660: 'Renderer::DrawSolidRect': 함수는 1개의 매개 변수를 사용하지 않습니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(43): error C2065: 'm_objects': 선언되지 않은 식별자입니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(43): error C2227: '->getStatus' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(44): error C2065: 'm_objects': 선언되지 않은 식별자입니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(44): error C2227: '->UpdateObject' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(44): error C2227: '->getX' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(44): error C2227: '->getY' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(44): error C2227: '->getZ' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(44): error C2227: '->getSize' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(44): error C2227: '->getStatus' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(44): error C2227: '->getSpeed' 왼쪽은 클래스/구조체/공용 구조체/제네릭 형식을 가리켜야 합니다.
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\simplegame.cpp(104): error C2065: 'm_objects': 선언되지 않은 식별자입니다.
-  SceneMgr.cpp
-c:\users\user\documents\github\gse_project\gse_2_2015180018\simplegame_object\simplegame\scenemgr.cpp(13): warning C4101: 'm_objects' :참조되지 않은 지역 변수입니다.
-  코드를 생성하고 있습니다...
+﻿  SimpleGame.vcxproj -> C:\Users\USER\Documents\GitHub\GSE_Project\GSE_2_2015180018\SimpleGame_object\x64\Debug\SimpleGame.exe
+  SimpleGame.vcxproj -> C:\Users\USER\Documents\GitHub\GSE_Project\GSE_2_2015180018\SimpleGame_object\x64\Debug\SimpleGame.pdb (Partial PDB)

@@ -1,12 +1,15 @@
 #pragma once
+#include "Renderer.h"
+#include "Object.h"
+#define MAX_OBJECT_COUNT 50
 
 class SceneMgr
 {
-private:
-	float x, y, z, size, r, g, b, a, status, speed;
 public:
+	Object* g_Object[MAX_OBJECT_COUNT];
 
 	SceneMgr();
 	~SceneMgr();
-	
+
+	void SceneMgr::Init();
 };

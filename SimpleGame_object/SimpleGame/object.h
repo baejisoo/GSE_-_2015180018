@@ -1,29 +1,18 @@
 #pragma once
-enum Monster {
-	Fire = 0,
-	Snow,
-	Water
-};
 class Object
 {
-private:
-	float x, y, z, size, r, g, b, a, status, speed;
 public:
-
-	Object(float x, float y, float z, float size, float r, float g, float b, float a, float status, float speed);
+	Object(float x, float y);
 	~Object();
-	void SetObjectPosition(float setX, float setY, float setZ, float setSize, float r, float g, float b, float a, float setStatus, float setSpeed);
-	void UpdateObject(float setX, float setY, float setZ, float setSize, float setStatus, float setSpeed);
-	void CreateObject(float setX, float setY, float setZ, float setSize, float red, float green, float blue, float alpha, float setStatus, float setSpeed);
 
-	float getX();
-	float getY();
-	float getZ();
-	float getSize();
-	float getR();
-	float getG();
-	float getB();
-	float getA();
-	float getStatus();
-	float getSpeed();
+	void Update();
+
+	float m_x;
+	float m_y;
+	float m_vX;
+	float m_vY;
+
+	float m_size;
+	float m_color[4];
 };
+

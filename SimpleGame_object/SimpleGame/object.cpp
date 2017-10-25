@@ -1,81 +1,41 @@
-#include <iostream>
 #include "stdafx.h"
-#include "object.h"
-using namespace std;
+#include "Object.h"
 
-Object::~Object() {
-
-}
-
-Object::Object(float setX, float setY, float setZ, float setSize, float red, float green, float blue, float alpha, float status, float speed) {
-	SetObjectPosition(setX, setY, setZ, setSize, red, green, blue, alpha, status, speed);
-}
-
-void Object::SetObjectPosition(float setX, float setY, float setZ, float setSize, float red, float green, float blue, float alpha, float setStatus, float setSpeed) {
-	x = setX;
-	y = setY;
-	z = setZ;
-	size = setSize;
-	r = red;
-	g = green;
-	b = blue;
-	a = alpha;
-	status = setStatus;
-	speed = setSpeed;
-}
-
-void Object::UpdateObject(float setX, float setY, float setZ, float setSize, float setStatus, float setSpeed)
+Object::Object(float x, float y)
 {
-	if (x < 250)
-	{
-		x = setX + setSpeed;
-	}
-	//y = setY + setSpeed;
-	//z = setZ + setSpeed;
+	m_x = x;
+	m_y = y;
+	m_vX = 0.3;
+	m_vY = 0.5;
+
+	m_size = 10;
+	m_color[0] = 1;
+	m_color[1] = 1;
+	m_color[2] = 1;
+	m_color[3] = 1;
 }
 
-void Object::CreateObject(float setX, float setY, float setZ, float setSize, float red, float green, float blue, float alpha, float setStatus, float setSpeed) 
+
+Object::~Object()
 {
-	x = setX;
-	y = setY;
-	z = setZ;
-	size = setSize;
-	r = red;
-	g = green;
-	b = blue;
-	a = alpha;
-	status = setStatus;
-	speed = setSpeed;
 
 }
-float Object::getX(){
-	return x;
-}
-float Object::getY() {
-	return y;
-}
-float Object::getZ() {
-	return z;
-}
-float Object::getSize() {
-	return size;
-}
-float Object::getR() {
-	return r;
-}
-float Object::getG() {
-	return g;
-}
-float Object::getB() {
-	return b;
-}
-float Object::getA() {
-	return a;
-}
-float Object::getStatus() {
-	return status;
-}
-float Object::getSpeed() {
-	return speed;
-}
 
+void Object::Update()
+{
+	float elapsedTime = 0.5;
+	m_x = m_x + m_vX * elapsedTime;
+	m_y = m_y + m_vY * elapsedTime;
+
+	if (m_x > 250)
+		m_vX = -m_vX;
+
+	if (m_x < -250)
+		m_vX = -m_vX;
+
+	if (m_y > 250)
+		m_vY = -m_vY;
+
+	if (m_y < -250)
+		m_vY = -m_vY;
+}
