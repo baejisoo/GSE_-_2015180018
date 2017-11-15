@@ -9,54 +9,49 @@ but WITHOUT ANY WARRANTY.
 */
 
 #include "stdafx.h"
+#include "windows.h"
 #include <iostream>
-#include <ctime>
 #include "Dependencies\glew.h"
 #include "Dependencies\freeglut.h"
+using namespace std;
 
-#include "Renderer.h"
-#include "Object.h"
-#define MAX_OBJECTS_COUNT 50
-Renderer *g_Renderer = NULL;
-Object *g_Object[MAX_OBJECTS_COUNT];
+#include "SceneMgr.h"
+#include "object.h"
+
+SceneMgr *g_SceneMgr = NULL;
+//Object *g_Object = NULL;
+DWORD g_prevTime = 0;
 
 void RenderScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
+	
+	DWORD currTime = timeGetTime();
+	DWORD elapsedTime = currTime - g_prevTime;
+	g_prevTime = currTime;
+	
+	g_SceneMgr->UpdateObject(elapsedTime);
+	g_SceneMgr->DrawObject();
 
-	// Renderer Test
-	for (int i = 0; i < MAX_OBJECTS_COUNT; ++i) {
-		g_Renderer->DrawSolidRect(
-			g_Object[i]->m_x,
-			g_Object[i]->m_y,
-			0,
-			g_Object[i]->m_size,
-			g_Object[i]->m_color[0],
-			g_Object[i]->m_color[1],
-			g_Object[i]->m_color[2],
-			g_Object[i]->m_color[3]
-		);
-
-		g_Object[i]->Update();
-	}
 	glutSwapBuffers();
 }
 
 void Idle(void)
 {
 	RenderScene();
-	for(int i=0; i<MAX_OBJECTS_COUNT; ++i)
-		g_Object[i]->Update();
+	//g_Object->Update();
 }
 
 void MouseInput(int button, int state, int x, int y)
 {
-	RenderScene();
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		//g_Object[]
+		g_SceneMgr->SetPosObject(x-250, 250-y, OBJECT_CHARACTER);
+
+		cout << "Click: " << x << ", " << y << endl;
 	}
+	RenderScene();
 }
 
 void KeyInput(unsigned char key, int x, int y)
@@ -88,32 +83,20 @@ int main(int argc, char **argv)
 		std::cout << "GLEW 3.0 not supported\n ";
 	}
 
-	// Initialize Renderer
-	g_Renderer = new Renderer(500, 500);
-	if (!g_Renderer->IsInitialized())
-	{
-		std::cout << "Renderer could not be initialized.. \n";
-	}
-
 	glutDisplayFunc(RenderScene);
 	glutIdleFunc(Idle);
 	glutKeyboardFunc(KeyInput);
 	glutMouseFunc(MouseInput);
 	glutSpecialFunc(SpecialKeyInput);
 
-	srand((unsigned)time(NULL));
-	int x, y;
-	for (int i = 0; i < MAX_OBJECTS_COUNT; ++i)
-	{
-		x = rand() % 250;
-		y = rand() % 250;
+	g_SceneMgr = new SceneMgr(500, 500);
+	g_SceneMgr->SetPosObject(0, 0, OBJECT_BUILDING);
+	g_SceneMgr->SetPosBuilding();
+	g_prevTime = timeGetTime();
 
-		g_Object[i] = new Object(x, y);
-	}
 	glutMainLoop();
 
-	delete g_Renderer;
-	delete g_Object;
+	delete g_SceneMgr;
 
 	return 0;
 }

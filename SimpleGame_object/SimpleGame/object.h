@@ -2,17 +2,26 @@
 class Object
 {
 public:
-	Object(float x, float y);
+	Object(float x, float y, int type);
 	~Object();
 
-	void Update();
+	float GetLife();
+	float GetLifeTime();
+	
+	void Update(float elapsedTime);
+	void MouseSetObject(float x, float y);
 
-	float m_x;
-	float m_y;
-	float m_vX;
-	float m_vY;
+	float g_x;
+	float g_y;
+	float g_vec_X;
+	float g_vec_Y;
 
-	float m_size;
-	float m_color[4];
+	float g_life;
+	float g_lifeTime;
+
+	int g_type;
+	float g_status;
+	float g_size;
+	float g_red, g_green, g_blue, g_alpha;
 };
 
