@@ -19,9 +19,9 @@ using namespace std;
 #include "object.h"
 
 SceneMgr *g_SceneMgr = NULL;
-//Object *g_Object = NULL;
 DWORD g_prevTime = 0;
 
+float coolTime = 7.0;
 void RenderScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -31,6 +31,7 @@ void RenderScene(void)
 	DWORD elapsedTime = currTime - g_prevTime;
 	g_prevTime = currTime;
 	
+	coolTime += elapsedTime / 1000.0;
 	g_SceneMgr->UpdateObject(elapsedTime);
 	g_SceneMgr->DrawObject();
 
@@ -40,16 +41,18 @@ void RenderScene(void)
 void Idle(void)
 {
 	RenderScene();
-	//g_Object->Update();
 }
 
 void MouseInput(int button, int state, int x, int y)
 {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		g_SceneMgr->SetPosObject(x-250, 250-y, OBJECT_CHARACTER);
-
 		cout << "Click: " << x << ", " << y << endl;
+		if (-400 < 400 - y && 400 - y < 0 && coolTime > 7)
+		{
+			g_SceneMgr->SetPosObject(x - 250, 400 - y, OBJECT_CHARACTER, TEAM_2);
+			coolTime = 0;
+		}
 	}
 	RenderScene();
 }
@@ -70,7 +73,7 @@ int main(int argc, char **argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(500, 500);
+	glutInitWindowSize(500, 800);
 	glutCreateWindow("Game Software Engineering KPU");
 
 	glewInit();
@@ -89,9 +92,15 @@ int main(int argc, char **argv)
 	glutMouseFunc(MouseInput);
 	glutSpecialFunc(SpecialKeyInput);
 
-	g_SceneMgr = new SceneMgr(500, 500);
-	g_SceneMgr->SetPosObject(0, 0, OBJECT_BUILDING);
-	g_SceneMgr->SetPosBuilding();
+	g_SceneMgr = new SceneMgr(500, 800);
+	g_SceneMgr->SetPosObject(-150, 300, OBJECT_BUILDING, TEAM_1);
+	g_SceneMgr->SetPosObject(0, 300, OBJECT_BUILDING, TEAM_1);
+	g_SceneMgr->SetPosObject(150, 300, OBJECT_BUILDING, TEAM_1);
+
+	g_SceneMgr->SetPosObject(-150, -300, OBJECT_BUILDING, TEAM_2);
+	g_SceneMgr->SetPosObject(0, -300, OBJECT_BUILDING, TEAM_2);
+	g_SceneMgr->SetPosObject(150, -300, OBJECT_BUILDING, TEAM_2);
+	//g_SceneMgr->SetPosBuilding();
 	g_prevTime = timeGetTime();
 
 	glutMainLoop();

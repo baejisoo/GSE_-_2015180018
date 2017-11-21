@@ -183,6 +183,9 @@
     <None Include="Shaders\SolidRectWithTextureSeq.fs" />
     <None Include="Shaders\SolidRectWithTextureSeq.vs" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\test.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
