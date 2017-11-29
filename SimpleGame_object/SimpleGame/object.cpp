@@ -6,12 +6,13 @@
 
 using namespace std;
 
-Object::Object(float x, float y, int type, int team)
+Object::Object(float x, float y, int type, int team, float level)
 {
 	g_x = x;
 	g_y = y;
 	g_type = type;
 	g_team = team;
+	g_level = level;
 	if (type == OBJECT_BUILDING)
 	{
 		g_vec_X = 0;
@@ -26,10 +27,21 @@ Object::Object(float x, float y, int type, int team)
 
 		g_size = 50;
 
-		g_red = 1;
-		g_green = 1;
-		g_blue = 0;
-		g_alpha = 1;
+
+		if (team == TEAM_1)
+		{
+			g_red = 1;
+			g_green = 0;
+			g_blue = 0;
+			g_alpha = 1;
+		}
+		else
+		{
+			g_red = 0;
+			g_green = 0;
+			g_blue = 1;
+			g_alpha = 1;
+		}
 	}
 	if (type == OBJECT_CHARACTER)
 	{
@@ -95,7 +107,7 @@ Object::Object(float x, float y, int type, int team)
 		g_life = 10;
 		g_lifeTime = 100000.f;
 
-		g_size = 2;
+		g_size = 5;
 
 		if (team == TEAM_1)
 		{

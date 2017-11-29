@@ -22,7 +22,7 @@ SceneMgr *g_SceneMgr = NULL;
 DWORD g_prevTime = 0;
 
 float coolTime = 7.0;
-void RenderScene(void)
+void RenderScene(void) 
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 	g_SceneMgr->SetPosObject(-150, 300, OBJECT_BUILDING, TEAM_1);
 	g_SceneMgr->SetPosObject(0, 300, OBJECT_BUILDING, TEAM_1);
 	g_SceneMgr->SetPosObject(150, 300, OBJECT_BUILDING, TEAM_1);
-
+	
 	g_SceneMgr->SetPosObject(-150, -300, OBJECT_BUILDING, TEAM_2);
 	g_SceneMgr->SetPosObject(0, -300, OBJECT_BUILDING, TEAM_2);
 	g_SceneMgr->SetPosObject(150, -300, OBJECT_BUILDING, TEAM_2);

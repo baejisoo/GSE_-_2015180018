@@ -20,7 +20,6 @@ SceneMgr::SceneMgr(int width, int height)
 	{
 		g_ObjectList[i] = NULL;
 	}
-	//g_Building = NULL;
 }
 
 SceneMgr::~SceneMgr()
@@ -30,7 +29,7 @@ void SceneMgr::SetPosBuilding()
 {
 	if (g_Building == NULL)
 	{
-		g_Building = new Object(0,0, OBJECT_BUILDING, TEAM_1);
+		g_Building = new Object(0,0, OBJECT_BUILDING, TEAM_1, LEVEL_GOD);
 	}
 }
 void SceneMgr::SetPosObject(float x, float y, int type, int team)
@@ -38,19 +37,19 @@ void SceneMgr::SetPosObject(float x, float y, int type, int team)
 	if (g_ObjectList[objectNum] == NULL)
 	{
 		if (type == OBJECT_BUILDING) {
-			g_ObjectList[objectNum] = new Object(x, y, OBJECT_BUILDING, team);
+			g_ObjectList[objectNum] = new Object(x, y, OBJECT_BUILDING, team, LEVEL_GOD);
 			++objectNum;
 		}
 		if (type == OBJECT_BULLET) {
-			g_ObjectList[objectNum] = new Object(x, y, OBJECT_BULLET, team);
+			g_ObjectList[objectNum] = new Object(x, y, OBJECT_BULLET, team, LEVEL_UNDERGROUND);
 			++objectNum;
 		}
 		if (type == OBJECT_CHARACTER) {
-			g_ObjectList[objectNum] = new Object(x, y, OBJECT_CHARACTER, team);
+			g_ObjectList[objectNum] = new Object(x, y, OBJECT_CHARACTER, team, LEVEL_GROUND);
 			++objectNum;
 		}
 		if (type == OBJECT_ARROW) {
-			g_ObjectList[objectNum] = new Object(x, y, OBJECT_ARROW, team);
+			g_ObjectList[objectNum] = new Object(x, y, OBJECT_ARROW, team, LEVEL_UNDERGROUND);
 			++objectNum;
 		}
 	}
@@ -106,7 +105,6 @@ void SceneMgr::UpdateObject(float elapsedTime)
 
 				if (g_ObjectList[i]->g_type == OBJECT_CHARACTER)
 				{
-
 					if (g_ObjectList[i]->g_fireTime >= 3)
 					{
 						SetPosObject(g_ObjectList[i]->g_x, g_ObjectList[i]->g_y, OBJECT_ARROW, g_ObjectList[i]->g_team);
@@ -114,11 +112,8 @@ void SceneMgr::UpdateObject(float elapsedTime)
 					}
 				}
 			}
-		}
-
-		
+		}	
 	}
-
 }
 
 void SceneMgr::CheckObjectStatus()
@@ -171,22 +166,36 @@ void SceneMgr::CheckCollision()
 							{
 								g_ObjectList[i]->SetDamage(g_ObjectList[j]->g_life);
 								g_ObjectList[j]->SetDamage(g_ObjectList[j]->g_life);	// 家戈
-								cout << "Buliding Life: " << g_ObjectList[i]->g_life;
-								cout << "Character Life: " << g_ObjectList[j]->g_life;
+								cout << "Buliding Life: " << g_ObjectList[i]->g_life << "	";
+								cout << "Character Life: " << g_ObjectList[j]->g_life << endl;
 							}
 							if (g_ObjectList[i]->g_type == OBJECT_BULLET && g_ObjectList[j]->g_type == OBJECT_CHARACTER)
 							{
 								g_ObjectList[i]->SetDamage(g_ObjectList[i]->g_life); // 家戈
 								g_ObjectList[j]->SetDamage(g_ObjectList[i]->g_life);
-								cout << "Bullet Life: " << g_ObjectList[i]->g_life;
-								cout << "Character Life: " << g_ObjectList[j]->g_life;
+								cout << "Bullet Life: " << g_ObjectList[i]->g_life << "	";
+								cout << "Character Life: " << g_ObjectList[j]->g_life << endl;
 							}
 							if (g_ObjectList[i]->g_type == OBJECT_BUILDING && g_ObjectList[j]->g_type == OBJECT_ARROW)
 							{
 								g_ObjectList[i]->SetDamage(g_ObjectList[j]->g_life); // 家戈
 								g_ObjectList[j]->SetDamage(g_ObjectList[j]->g_life);
-								cout << "Buliding Life: " << g_ObjectList[i]->g_life;
-								cout << "Arrow Life: " << g_ObjectList[j]->g_life;
+								cout << "Buliding Life: " << g_ObjectList[i]->g_life << "	";
+								cout << "Arrow Life: " << g_ObjectList[j]->g_life << endl;
+							}
+							if (g_ObjectList[i]->g_type == OBJECT_ARROW && g_ObjectList[j]->g_type == OBJECT_CHARACTER)
+							{
+								g_ObjectList[i]->SetDamage(g_ObjectList[i]->g_life); // 家戈
+								g_ObjectList[j]->SetDamage(g_ObjectList[i]->g_life);
+								cout << "Arrow Life: " << g_ObjectList[i]->g_life << "	";
+								cout << "Character Life: " << g_ObjectList[j]->g_life << endl;
+							}
+							if (g_ObjectList[i]->g_type == OBJECT_BULLET && g_ObjectList[j]->g_type == OBJECT_BUILDING)
+							{
+								g_ObjectList[i]->SetDamage(g_ObjectList[i]->g_life); // 家戈
+								g_ObjectList[j]->SetDamage(g_ObjectList[i]->g_life);
+								cout << "Bullet Life: " << g_ObjectList[i]->g_life;
+								cout << "Building Life: " << g_ObjectList[j]->g_life;
 							}
 						}
 					}
@@ -237,50 +246,88 @@ void SceneMgr::DeletePosObject(int num)
 void SceneMgr::DrawObject()
 {
 	glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
-	
-	if (g_Building != NULL) {
-		g_Renderer->DrawTexturedRect(0, 0, 0, 50, 1, 1, 0, 0.5,g_Renderer->CreatePngTexture("Textures/test.png"));
-		
-	}
+
 
 	for (int i = 0; i < MAX_OBJECT_COUNT; ++i)
 	{
-		
 		if (g_ObjectList[i] != NULL) {
 			if (g_ObjectList[i]->g_type == OBJECT_BUILDING)
 			{
 				if (g_ObjectList[i]->g_team == TEAM_1)
 				{
+					g_Renderer->DrawSolidRectGauge(
+						g_ObjectList[i]->g_x,
+						g_ObjectList[i]->g_y + 40,
+						0,
+						30,
+						5,
+						g_ObjectList[i]->g_red,
+						g_ObjectList[i]->g_green,
+						g_ObjectList[i]->g_blue,
+						g_ObjectList[i]->g_alpha,
+						g_ObjectList[i]->g_life,
+						g_ObjectList[i]->g_level
+					);
 					g_Renderer->DrawTexturedRect(
 						g_ObjectList[i]->g_x,
 						g_ObjectList[i]->g_y,
 						0,
 						g_ObjectList[i]->g_size,
-						g_ObjectList[i]->g_red,
-						g_ObjectList[i]->g_green,
-						g_ObjectList[i]->g_blue,
+						1/*g_ObjectList[i]->g_red*/,
+						1/*g_ObjectList[i]->g_green*/,
+						1/*g_ObjectList[i]->g_blue*/,
 						g_ObjectList[i]->g_alpha,
-						g_Renderer->CreatePngTexture("Textures/TEAM_1.png")
+						g_Renderer->CreatePngTexture("Textures/TEAM_1.png"),
+						g_ObjectList[i]->g_level
 					);
 				}
 				else
 				{
+					g_Renderer->DrawSolidRectGauge(
+						g_ObjectList[i]->g_x,
+						g_ObjectList[i]->g_y + 40,
+						0,
+						30,
+						5,
+						g_ObjectList[i]->g_red,
+						g_ObjectList[i]->g_green,
+						g_ObjectList[i]->g_blue,
+						g_ObjectList[i]->g_alpha,
+						g_ObjectList[i]->g_life,
+						g_ObjectList[i]->g_level
+					);
 					g_Renderer->DrawTexturedRect(
 						g_ObjectList[i]->g_x,
 						g_ObjectList[i]->g_y,
 						0,
 						g_ObjectList[i]->g_size,
+						1/*g_ObjectList[i]->g_red*/,
+						1/*g_ObjectList[i]->g_green*/,
+						1/*g_ObjectList[i]->g_blue*/,
+						g_ObjectList[i]->g_alpha,
+						g_Renderer->CreatePngTexture("Textures/TEAM_2.png"),
+						g_ObjectList[i]->g_level
+					);
+				}			
+			}
+			else 
+			{
+				if (g_ObjectList[i]->g_type == OBJECT_CHARACTER)
+				{
+					g_Renderer->DrawSolidRectGauge(
+						g_ObjectList[i]->g_x,
+						g_ObjectList[i]->g_y + 20,
+						0,
+						30,
+						5,
 						g_ObjectList[i]->g_red,
 						g_ObjectList[i]->g_green,
 						g_ObjectList[i]->g_blue,
 						g_ObjectList[i]->g_alpha,
-						g_Renderer->CreatePngTexture("Textures/TEAM_2.png")
+						g_ObjectList[i]->g_life,
+						g_ObjectList[i]->g_level
 					);
 				}
-				
-			}
-			else 
-			{
 				g_Renderer->DrawSolidRect(
 					g_ObjectList[i]->g_x,
 					g_ObjectList[i]->g_y,
@@ -289,11 +336,11 @@ void SceneMgr::DrawObject()
 					g_ObjectList[i]->g_red,
 					g_ObjectList[i]->g_green,
 					g_ObjectList[i]->g_blue,
-					g_ObjectList[i]->g_alpha
+					g_ObjectList[i]->g_alpha,
+					g_ObjectList[i]->g_level
 				);
 			}
 		}
 	}
-	
 }
 

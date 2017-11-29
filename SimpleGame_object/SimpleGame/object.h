@@ -2,18 +2,18 @@
 class Object
 {
 public:
-	Object(float x, float y, int type, int team);
+	Object(float x, float y, int type, int team, float level);
 	~Object();
 
 	float GetLife();
 	float GetLifeTime();
 	
-
 	void SetDamage(int damage);
 	void CreateChar(float elapsedTime);
 	void Update(float elapsedTime);
 	void MouseSetObject(float x, float y);
 
+	float g_level;
 	float g_team;
 	float g_x;
 	float g_y;
