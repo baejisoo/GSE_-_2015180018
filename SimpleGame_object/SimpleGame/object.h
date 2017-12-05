@@ -30,5 +30,8 @@ public:
 	float g_status;
 	float g_size;
 	float g_red, g_green, g_blue, g_alpha;
+
+	int g_sprite;
+	float g_particleTime;
 };
 
