@@ -49,11 +49,13 @@ Object::Object(float x, float y, int type, int team, float level)
 		g_vec_Y = 300.f *(((float)std::rand() / (float)RAND_MAX) - 0.5f);
 
 		g_status = 1;
-		g_life = 10.0;
+		g_life = 100.0;
 		g_lifeTime = 100000.f;
 		g_fireTime = 0;
 
 		g_size = 10;
+
+		g_sprite = 0;
 
 		if (team == TEAM_1)
 		{
@@ -80,7 +82,8 @@ Object::Object(float x, float y, int type, int team, float level)
 		g_life = 20;
 		g_lifeTime = 100000.f;
 
-		g_size = 2;
+		g_size = 5;
+		g_particleTime = 0;
 
 		if (team == TEAM_1)
 		{
@@ -142,6 +145,8 @@ void Object::Update(float elapsedTime)
 	g_y = g_y + g_vec_Y * elapsedTimeSec;
 	g_fireTime += elapsedTimeSec;
 	g_createTime += elapsedTimeSec;
+	g_sprite += 1;
+	g_particleTime += elapsedTimeSec;
 
 	if (g_type == OBJECT_BULLET || g_type == OBJECT_ARROW)
 	{
@@ -173,6 +178,12 @@ void Object::Update(float elapsedTime)
 	if (g_life <= 0.0)
 	{
 		g_status = 0;
+	}
+	if (g_type == OBJECT_CHARACTER)
+	{
+		g_sprite += 1;
+		if (g_sprite > 5)
+			g_sprite = 0;
 	}
 }
 

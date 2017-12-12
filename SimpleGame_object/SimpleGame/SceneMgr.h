@@ -4,6 +4,8 @@
 
 #include "Renderer.h"
 #include "object.h"
+#include "Sound.h"
+
 #define MAX_OBJECT_COUNT 3000
 #define OBJECT_BUILDING 0
 #define OBJECT_CHARACTER 1
@@ -23,7 +25,7 @@ public:
 	~SceneMgr();
 	
 	float CreateCharTime = 0;
-
+	
 	void DrawObject();
 	void SetPosObject(float x, float y, int type, int team);
 	void SetPosBuilding();
@@ -33,10 +35,19 @@ public:
 	void CheckObjectStatus();
 private:
 
-	Object *g_ObjectList[MAX_OBJECT_COUNT];
+	Object *g_ObjectList[MAX_OBJECT_COUNT] = { NULL };
 	Object *g_Building;
 	Renderer *g_Renderer;
+	Sound *g_Sound;
+
 	int g_WindowWidth;
 	int g_WindowHeight;
+
+	GLuint textureBack;
+	GLuint textureBuilding1;
+	GLuint textureBuilding2;
+	GLuint textureChar1;
+	GLuint textureChar2;
+	GLuint texturePartical;
 
 };

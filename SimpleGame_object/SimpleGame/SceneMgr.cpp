@@ -20,10 +20,22 @@ SceneMgr::SceneMgr(int width, int height)
 	{
 		g_ObjectList[i] = NULL;
 	}
+	textureBack = g_Renderer->CreatePngTexture("Textures/Background2.png");
+	textureBuilding1 = g_Renderer->CreatePngTexture("Textures/TEAM_1.png");
+	textureBuilding2 = g_Renderer->CreatePngTexture("Textures/TEAM_2.png");
+	textureChar1 = g_Renderer->CreatePngTexture("Textures/TEAM_1_Character.png");
+	textureChar2 = g_Renderer->CreatePngTexture("Textures/TEAM_2_Character.png");
+	texturePartical = g_Renderer->CreatePngTexture("Textures/particle.png");
+	
+	g_Sound = new Sound();
+	int soundBG = g_Sound->CreateSound("Sounds/Blur-Song2.mp3");
+
+	g_Sound->PlaySound(soundBG, true, 0.2f);
 }
 
 SceneMgr::~SceneMgr()
 {
+
 }
 void SceneMgr::SetPosBuilding()
 {
@@ -41,15 +53,15 @@ void SceneMgr::SetPosObject(float x, float y, int type, int team)
 			++objectNum;
 		}
 		if (type == OBJECT_BULLET) {
-			g_ObjectList[objectNum] = new Object(x, y, OBJECT_BULLET, team, LEVEL_UNDERGROUND);
+			g_ObjectList[objectNum] = new Object(x, y, OBJECT_BULLET, team, LEVEL_GROUND);
 			++objectNum;
 		}
 		if (type == OBJECT_CHARACTER) {
-			g_ObjectList[objectNum] = new Object(x, y, OBJECT_CHARACTER, team, LEVEL_GROUND);
+			g_ObjectList[objectNum] = new Object(x, y, OBJECT_CHARACTER, team, LEVEL_SKY);
 			++objectNum;
 		}
 		if (type == OBJECT_ARROW) {
-			g_ObjectList[objectNum] = new Object(x, y, OBJECT_ARROW, team, LEVEL_UNDERGROUND);
+			g_ObjectList[objectNum] = new Object(x, y, OBJECT_ARROW, team, LEVEL_GROUND);
 			++objectNum;
 		}
 	}
@@ -78,6 +90,8 @@ void SceneMgr::UpdateObject(float elapsedTime)
 		SetPosObject(createX, createY, OBJECT_CHARACTER, TEAM_1);
 		CreateCharTime = 0;
 	}
+
+
 	for (int i = 0; i < MAX_OBJECT_COUNT; ++i)
 	{
 		if (g_ObjectList[i] != NULL)
@@ -169,33 +183,33 @@ void SceneMgr::CheckCollision()
 								cout << "Buliding Life: " << g_ObjectList[i]->g_life << "	";
 								cout << "Character Life: " << g_ObjectList[j]->g_life << endl;
 							}
-							if (g_ObjectList[i]->g_type == OBJECT_BULLET && g_ObjectList[j]->g_type == OBJECT_CHARACTER)
+							if (g_ObjectList[i]->g_type == OBJECT_CHARACTER && g_ObjectList[j]->g_type == OBJECT_BULLET)
 							{
-								g_ObjectList[i]->SetDamage(g_ObjectList[i]->g_life); // 家戈
-								g_ObjectList[j]->SetDamage(g_ObjectList[i]->g_life);
-								cout << "Bullet Life: " << g_ObjectList[i]->g_life << "	";
-								cout << "Character Life: " << g_ObjectList[j]->g_life << endl;
+								g_ObjectList[i]->SetDamage(g_ObjectList[j]->g_life); 
+								g_ObjectList[j]->SetDamage(g_ObjectList[j]->g_life); // 家戈
+								cout << "Character Life: " << g_ObjectList[i]->g_life << "	";
+								cout << "Bullet Life: " << g_ObjectList[j]->g_life << endl;
 							}
 							if (g_ObjectList[i]->g_type == OBJECT_BUILDING && g_ObjectList[j]->g_type == OBJECT_ARROW)
 							{
-								g_ObjectList[i]->SetDamage(g_ObjectList[j]->g_life); // 家戈
-								g_ObjectList[j]->SetDamage(g_ObjectList[j]->g_life);
+								g_ObjectList[i]->SetDamage(10); 
+								g_ObjectList[j]->SetDamage(10); // 家戈
 								cout << "Buliding Life: " << g_ObjectList[i]->g_life << "	";
 								cout << "Arrow Life: " << g_ObjectList[j]->g_life << endl;
 							}
-							if (g_ObjectList[i]->g_type == OBJECT_ARROW && g_ObjectList[j]->g_type == OBJECT_CHARACTER)
+							if (g_ObjectList[i]->g_type == OBJECT_CHARACTER && g_ObjectList[j]->g_type == OBJECT_ARROW)
 							{
-								g_ObjectList[i]->SetDamage(g_ObjectList[i]->g_life); // 家戈
-								g_ObjectList[j]->SetDamage(g_ObjectList[i]->g_life);
-								cout << "Arrow Life: " << g_ObjectList[i]->g_life << "	";
-								cout << "Character Life: " << g_ObjectList[j]->g_life << endl;
+								g_ObjectList[i]->SetDamage(g_ObjectList[j]->g_life); 
+								g_ObjectList[j]->SetDamage(g_ObjectList[j]->g_life); // 家戈
+								cout << "Character Life: " << g_ObjectList[i]->g_life << "	";
+								cout << "Arrow Life: " << g_ObjectList[j]->g_life << endl;
 							}
-							if (g_ObjectList[i]->g_type == OBJECT_BULLET && g_ObjectList[j]->g_type == OBJECT_BUILDING)
+							if (g_ObjectList[i]->g_type == OBJECT_BUILDING && g_ObjectList[j]->g_type == OBJECT_BULLET)
 							{
-								g_ObjectList[i]->SetDamage(g_ObjectList[i]->g_life); // 家戈
-								g_ObjectList[j]->SetDamage(g_ObjectList[i]->g_life);
-								cout << "Bullet Life: " << g_ObjectList[i]->g_life;
-								cout << "Building Life: " << g_ObjectList[j]->g_life;
+								g_ObjectList[i]->SetDamage(g_ObjectList[j]->g_life); 
+								g_ObjectList[j]->SetDamage(g_ObjectList[j]->g_life); // 家戈
+								cout << "Buliding Life: " << g_ObjectList[i]->g_life << endl;
+								cout << "Bullet Life: " << g_ObjectList[j]->g_life << endl;
 							}
 						}
 					}
@@ -242,12 +256,21 @@ void SceneMgr::DeletePosObject(int num)
 		g_ObjectList[num] = NULL;
 	}
 }
-
 void SceneMgr::DrawObject()
 {
-	glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
-
-
+	g_Renderer->DrawTexturedRect(
+		0,
+		0,
+		0,
+		800,
+		1,
+		1,
+		1,
+		1,
+		textureBack,
+		LEVEL_UNDERGROUND
+	);
+	
 	for (int i = 0; i < MAX_OBJECT_COUNT; ++i)
 	{
 		if (g_ObjectList[i] != NULL) {
@@ -265,7 +288,7 @@ void SceneMgr::DrawObject()
 						g_ObjectList[i]->g_green,
 						g_ObjectList[i]->g_blue,
 						g_ObjectList[i]->g_alpha,
-						g_ObjectList[i]->g_life,
+						g_ObjectList[i]->g_life/500,
 						g_ObjectList[i]->g_level
 					);
 					g_Renderer->DrawTexturedRect(
@@ -277,7 +300,7 @@ void SceneMgr::DrawObject()
 						1/*g_ObjectList[i]->g_green*/,
 						1/*g_ObjectList[i]->g_blue*/,
 						g_ObjectList[i]->g_alpha,
-						g_Renderer->CreatePngTexture("Textures/TEAM_1.png"),
+						textureBuilding1,
 						g_ObjectList[i]->g_level
 					);
 				}
@@ -293,7 +316,7 @@ void SceneMgr::DrawObject()
 						g_ObjectList[i]->g_green,
 						g_ObjectList[i]->g_blue,
 						g_ObjectList[i]->g_alpha,
-						g_ObjectList[i]->g_life,
+						g_ObjectList[i]->g_life/500,
 						g_ObjectList[i]->g_level
 					);
 					g_Renderer->DrawTexturedRect(
@@ -305,29 +328,86 @@ void SceneMgr::DrawObject()
 						1/*g_ObjectList[i]->g_green*/,
 						1/*g_ObjectList[i]->g_blue*/,
 						g_ObjectList[i]->g_alpha,
-						g_Renderer->CreatePngTexture("Textures/TEAM_2.png"),
+						textureBuilding2,
 						g_ObjectList[i]->g_level
 					);
 				}			
 			}
-			else 
+			if (g_ObjectList[i]->g_type == OBJECT_CHARACTER)
 			{
-				if (g_ObjectList[i]->g_type == OBJECT_CHARACTER)
+				g_Renderer->DrawSolidRectGauge(
+					g_ObjectList[i]->g_x,
+					g_ObjectList[i]->g_y + 20,
+					0,
+					30,
+					5,
+					g_ObjectList[i]->g_red,
+					g_ObjectList[i]->g_green,
+					g_ObjectList[i]->g_blue,
+					g_ObjectList[i]->g_alpha,
+					g_ObjectList[i]->g_life / 100,
+					g_ObjectList[i]->g_level
+				);
+				if (g_ObjectList[i]->g_team == TEAM_1)
 				{
-					g_Renderer->DrawSolidRectGauge(
+					g_Renderer->DrawTexturedRectSeq(
 						g_ObjectList[i]->g_x,
-						g_ObjectList[i]->g_y + 20,
+						g_ObjectList[i]->g_y,
 						0,
-						30,
-						5,
+						g_ObjectList[i]->g_size * 4,
 						g_ObjectList[i]->g_red,
 						g_ObjectList[i]->g_green,
 						g_ObjectList[i]->g_blue,
 						g_ObjectList[i]->g_alpha,
-						g_ObjectList[i]->g_life,
-						g_ObjectList[i]->g_level
-					);
+						textureChar1, g_ObjectList[i]->g_sprite, 0, 6, 1, g_ObjectList[i]->g_level);
 				}
+				if (g_ObjectList[i]->g_team == TEAM_2)
+				{
+					g_Renderer->DrawTexturedRectSeq(
+						g_ObjectList[i]->g_x,
+						g_ObjectList[i]->g_y,
+						0,
+						g_ObjectList[i]->g_size * 4,
+						g_ObjectList[i]->g_red,
+						g_ObjectList[i]->g_green,
+						g_ObjectList[i]->g_blue,
+						g_ObjectList[i]->g_alpha,
+						textureChar2, g_ObjectList[i]->g_sprite, 0, 6, 1, g_ObjectList[i]->g_level);
+				}
+			}
+			if (g_ObjectList[i]->g_type == OBJECT_BULLET)
+			{
+				
+				g_Renderer->DrawSolidRect(
+					g_ObjectList[i]->g_x,
+					g_ObjectList[i]->g_y,
+					0,
+					g_ObjectList[i]->g_size,
+					g_ObjectList[i]->g_red,
+					g_ObjectList[i]->g_green,
+					g_ObjectList[i]->g_blue,
+					g_ObjectList[i]->g_alpha,
+					g_ObjectList[i]->g_level
+				);
+				
+				g_Renderer->DrawParticle(g_ObjectList[i]->g_x,
+					g_ObjectList[i]->g_y,
+					0,
+					5,
+					1,
+					1,
+					1,
+					1,
+					-g_ObjectList[i]->g_vec_X,
+					-g_ObjectList[i]->g_vec_Y,
+					texturePartical,
+					g_ObjectList[i]->g_particleTime
+				);
+				//cout << "PT :" << g_ObjectList[i]->g_particleTime << endl;
+			}
+			if (g_ObjectList[i]->g_type == OBJECT_ARROW)
+			{
+
 				g_Renderer->DrawSolidRect(
 					g_ObjectList[i]->g_x,
 					g_ObjectList[i]->g_y,
@@ -341,6 +421,16 @@ void SceneMgr::DrawObject()
 				);
 			}
 		}
+	}
+
+	for (int i = 0; i < 6; ++i) {
+		_itoa_s((int)g_ObjectList[i]->g_life, g_ObjectList[i]->textLife, 10);
+		g_Renderer->DrawText(
+			g_ObjectList[i]->g_x - 35, 
+			g_ObjectList[i]->g_y + 35, 
+			GLUT_BITMAP_HELVETICA_12, 
+			1, 1, 1, 
+			g_ObjectList[i]->textLife);
 	}
 }
 
