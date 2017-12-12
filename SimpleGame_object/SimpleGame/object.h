@@ -30,13 +30,5 @@ public:
 	float g_status;
 	float g_size;
 	float g_red, g_green, g_blue, g_alpha;
-
-	int g_sprite;
-	float g_particleTime;
-<<<<<<< HEAD
-
-	char textLife[10];
-=======
->>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 };
 

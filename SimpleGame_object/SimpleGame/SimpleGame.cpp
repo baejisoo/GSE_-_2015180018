@@ -19,7 +19,6 @@ using namespace std;
 #include "object.h"
 
 SceneMgr *g_SceneMgr = NULL;
-
 DWORD g_prevTime = 0;
 
 float coolTime = 7.0;
@@ -35,6 +34,7 @@ void RenderScene(void)
 	coolTime += elapsedTime / 1000.0;
 	g_SceneMgr->UpdateObject(elapsedTime);
 	g_SceneMgr->DrawObject();
+
 	glutSwapBuffers();
 }
 
