@@ -33,7 +33,10 @@ public:
 
 	int g_sprite;
 	float g_particleTime;
+<<<<<<< HEAD
 
 	char textLife[10];
+=======
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 };
 

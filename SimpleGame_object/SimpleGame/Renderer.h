@@ -25,8 +25,11 @@ public:
 	void DrawTexturedRect(float x, float y, float z, float size, float r, float g, float b, float a, GLuint texID, float level);
 	void DrawTexturedRectSeq(float x, float y, float z, float size, float r, float g, float b, float a, GLuint texID, int currSeqX, int currSeqY, int totalSeqX, int totalSeqY, float level);
 	void DrawParticle(float x, float y, float z, float size, float r, float g, float b, float a, float gDirX, float gDirY, GLuint texID, float timeInSeconds);
+<<<<<<< HEAD
 	void DrawText(float x, float y, void* font, float r, float g, float b, char* text);
 	void SetSceneTransform(float x, float y, float scaleX, float scaleY);
+=======
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 
 	unsigned char * loadBMPRaw(const char * imagepath, unsigned int& outWidth, unsigned int& outHeight, bool flipY);
 
@@ -60,6 +63,7 @@ private:
 	GLuint m_SolidRectWithTextureShader = 0;
 	GLuint m_SolidRectWithTextureSeqShader = 0;
 	GLuint m_ParticleWithTextureShader = 0;
+<<<<<<< HEAD
 
 	float m_sceneTransX = 0;
 	float m_sceneTransY = 0;
@@ -68,6 +72,14 @@ private:
 
 	std::map<GLuint, GLuint> m_TextureList;
 
+=======
+
+	GLuint m_TextureCharacter = 0;
+	GLuint m_TextureBuilding = 0;
+	GLuint m_TextureBullet = 0;
+	GLuint m_TextureArrow = 0;
+
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 	int m_ParticleCount = 100;
 	int m_ParticleVertexCount = m_ParticleCount * 2 * 3;
 };

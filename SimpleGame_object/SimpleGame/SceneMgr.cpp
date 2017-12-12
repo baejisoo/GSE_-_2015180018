@@ -258,6 +258,10 @@ void SceneMgr::DeletePosObject(int num)
 }
 void SceneMgr::DrawObject()
 {
+<<<<<<< HEAD
+=======
+	
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 	g_Renderer->DrawTexturedRect(
 		0,
 		0,
@@ -267,7 +271,11 @@ void SceneMgr::DrawObject()
 		1,
 		1,
 		1,
+<<<<<<< HEAD
 		textureBack,
+=======
+		g_Renderer->CreatePngTexture("Textures/Background2.png"),
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 		LEVEL_UNDERGROUND
 	);
 	
@@ -359,6 +367,7 @@ void SceneMgr::DrawObject()
 						g_ObjectList[i]->g_green,
 						g_ObjectList[i]->g_blue,
 						g_ObjectList[i]->g_alpha,
+<<<<<<< HEAD
 						textureChar1, g_ObjectList[i]->g_sprite, 0, 6, 1, g_ObjectList[i]->g_level);
 				}
 				if (g_ObjectList[i]->g_team == TEAM_2)
@@ -374,6 +383,23 @@ void SceneMgr::DrawObject()
 						g_ObjectList[i]->g_alpha,
 						textureChar2, g_ObjectList[i]->g_sprite, 0, 6, 1, g_ObjectList[i]->g_level);
 				}
+=======
+						g_Renderer->CreatePngTexture("Textures/TEAM_1_Character.png"), g_ObjectList[i]->g_sprite, 0, 6, 1, g_ObjectList[i]->g_level);
+				}
+				if (g_ObjectList[i]->g_team == TEAM_2)
+				{
+					g_Renderer->DrawTexturedRectSeq(
+						g_ObjectList[i]->g_x,
+						g_ObjectList[i]->g_y,
+						0,
+						g_ObjectList[i]->g_size * 4,
+						g_ObjectList[i]->g_red,
+						g_ObjectList[i]->g_green,
+						g_ObjectList[i]->g_blue,
+						g_ObjectList[i]->g_alpha,
+						g_Renderer->CreatePngTexture("Textures/TEAM_2_Character.png"), g_ObjectList[i]->g_sprite, 0, 6, 1, g_ObjectList[i]->g_level);
+				}
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 			}
 			if (g_ObjectList[i]->g_type == OBJECT_BULLET)
 			{
@@ -400,10 +426,17 @@ void SceneMgr::DrawObject()
 					1,
 					-g_ObjectList[i]->g_vec_X,
 					-g_ObjectList[i]->g_vec_Y,
+<<<<<<< HEAD
 					texturePartical,
 					g_ObjectList[i]->g_particleTime
 				);
 				//cout << "PT :" << g_ObjectList[i]->g_particleTime << endl;
+=======
+					g_Renderer->CreatePngTexture("Textures/particle.png"),
+					g_ObjectList[i]->g_particleTime
+				);
+				cout << "PT :" << g_ObjectList[i]->g_particleTime << endl;
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 			}
 			if (g_ObjectList[i]->g_type == OBJECT_ARROW)
 			{
@@ -423,6 +456,7 @@ void SceneMgr::DrawObject()
 		}
 	}
 
+<<<<<<< HEAD
 	for (int i = 0; i < 6; ++i) {
 		_itoa_s((int)g_ObjectList[i]->g_life, g_ObjectList[i]->textLife, 10);
 		g_Renderer->DrawText(
@@ -432,5 +466,8 @@ void SceneMgr::DrawObject()
 			1, 1, 1, 
 			g_ObjectList[i]->textLife);
 	}
+=======
+	
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 }
 

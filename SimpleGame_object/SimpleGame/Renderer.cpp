@@ -640,6 +640,7 @@ void Renderer::DrawTexturedRect(float x, float y, float z, float size, float r, 
 
 	glDisableVertexAttribArray(attribPosition);
 	glDisableVertexAttribArray(attribTexPosition);
+<<<<<<< HEAD
 }
 
 void Renderer::DrawTexturedRectSeq(float x, float y, float z, float size, float r, float g, float b, float a, GLuint texID, int currSeqX, int currSeqY, int totalSeqX, int totalSeqY, float level)
@@ -739,6 +740,11 @@ void Renderer::DrawTexturedRectXY(float x, float y, float z, float width, float 
 }
 
 void Renderer::DrawTexturedRectSeqXY(float x, float y, float z, float width, float height, float r, float g, float b, float a, GLuint texID, int currSeqX, int currSeqY, int totalSeqX, int totalSeqY, float level)
+=======
+}
+
+void Renderer::DrawTexturedRectSeq(float x, float y, float z, float size, float r, float g, float b, float a, GLuint texID, int currSeqX, int currSeqY, int totalSeqX, int totalSeqY, float level)
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 {
 	float newX, newY;
 
@@ -797,6 +803,7 @@ void Renderer::DrawParticle(float x, float y, float z, float size, float r, floa
 	GetGLPosition(x, y, &newX, &newY);
 
 	GLuint shader = m_ParticleWithTextureShader;
+<<<<<<< HEAD
 
 	//Program select
 	glUseProgram(shader);
@@ -806,6 +813,17 @@ void Renderer::DrawParticle(float x, float y, float z, float size, float r, floa
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_DEPTH_TEST);
 
+=======
+
+	//Program select
+	glUseProgram(shader);
+
+	//Enable alpha blend
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_DEPTH_TEST);
+
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 	int attribPosition = glGetAttribLocation(shader, "a_Position");
 	int attribTexPos = glGetAttribLocation(shader, "a_TexPos");
 	int attribVelocity = glGetAttribLocation(shader, "a_Velocity");
@@ -828,7 +846,11 @@ void Renderer::DrawParticle(float x, float y, float z, float size, float r, floa
 
 	glUniform1f(uniformElapsedTime, timeInSeconds);
 	glUniform1i(uniformTexture, 0);
+<<<<<<< HEAD
 	glUniform4f(u_Trans, newX, newY, size*m_sceneScaleX, size*m_sceneScaleY);
+=======
+	glUniform4f(u_Trans, newX, newY, 0, size);
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 	glUniform4f(u_Color, r, g, b, a);
 	glUniform3f(u_TrailDir, gDirX, gDirY, 0);
 
@@ -840,6 +862,7 @@ void Renderer::DrawParticle(float x, float y, float z, float size, float r, floa
 	glDisableVertexAttribArray(attribPosition);
 	glDisableVertexAttribArray(attribTexPos);
 	glDisableVertexAttribArray(attribVelocity);
+<<<<<<< HEAD
 }
 
 void Renderer::DrawText(float x, float y, void* font, float r, float g, float b, char* text)
@@ -852,6 +875,8 @@ void Renderer::DrawText(float x, float y, void* font, float r, float g, float b,
 	glColor3f(r, g, b);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glutBitmapString(GLUT_BITMAP_HELVETICA_10, (unsigned char*)text);
+=======
+>>>>>>> e6326eefeba23351ab2371f7e82caf1b19e49170
 }
 
 void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
