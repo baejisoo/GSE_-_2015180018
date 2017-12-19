@@ -82,11 +82,12 @@ void SceneMgr::UpdateObject(float elapsedTime)
 {
 	CheckCollision();
 	CreateCharTime += elapsedTime / 1000.0;
+	snowTime += elapsedTime / 100.0;
 	if (CreateCharTime >= 5.0)
 	{
 		int createX = std::rand() % 200 - 200;
 		int createY = std::rand() % 300;
-		cout << createX << ", " << createY << endl;
+		//cout << createX << ", " << createY << endl;
 		SetPosObject(createX, createY, OBJECT_CHARACTER, TEAM_1);
 		CreateCharTime = 0;
 	}
@@ -270,7 +271,8 @@ void SceneMgr::DrawObject()
 		textureBack,
 		LEVEL_UNDERGROUND
 	);
-	
+	g_Renderer->DrawParticleClimate(0, 0, 0, 1, 1, 1, 1, 1, -0.1, -0.1, texturePartical, snowTime, 0.01);
+
 	for (int i = 0; i < MAX_OBJECT_COUNT; ++i)
 	{
 		if (g_ObjectList[i] != NULL) {
@@ -393,7 +395,7 @@ void SceneMgr::DrawObject()
 				g_Renderer->DrawParticle(g_ObjectList[i]->g_x,
 					g_ObjectList[i]->g_y,
 					0,
-					5,
+					7,
 					1,
 					1,
 					1,
@@ -401,7 +403,8 @@ void SceneMgr::DrawObject()
 					-g_ObjectList[i]->g_vec_X,
 					-g_ObjectList[i]->g_vec_Y,
 					texturePartical,
-					g_ObjectList[i]->g_particleTime
+					g_ObjectList[i]->g_particleTime,
+					LEVEL_UNDERGROUND
 				);
 				//cout << "PT :" << g_ObjectList[i]->g_particleTime << endl;
 			}

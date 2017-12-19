@@ -56,7 +56,7 @@ Object::Object(float x, float y, int type, int team, float level)
 		g_size = 10;
 
 		g_sprite = 0;
-
+		g_spriteTime = 0;
 		if (team == TEAM_1)
 		{
 			g_red = 1;
@@ -75,9 +75,9 @@ Object::Object(float x, float y, int type, int team, float level)
 	else if (type == OBJECT_BULLET)
 	{
 
-		g_vec_X = 600.f *(((float)std::rand() / (float)RAND_MAX) - 0.5f);
-		g_vec_Y = 600.f *(((float)std::rand() / (float)RAND_MAX) - 0.5f);
-		
+		g_vec_X = 300.f *(((float)std::rand() / (float)RAND_MAX) - 0.5f);
+		g_vec_Y = 300.f *(((float)std::rand() / (float)RAND_MAX) - 0.5f);
+
 		g_status = 1;
 		g_life = 20;
 		g_lifeTime = 100000.f;
@@ -87,6 +87,8 @@ Object::Object(float x, float y, int type, int team, float level)
 
 		if (team == TEAM_1)
 		{
+			if (g_vec_Y >= 0)
+				g_vec_Y *= -1;
 			g_red = 1;
 			g_green = 0;
 			g_blue = 0;
@@ -94,6 +96,8 @@ Object::Object(float x, float y, int type, int team, float level)
 		}
 		else
 		{
+			if (g_vec_Y < 0)
+				g_vec_Y *= -1;
 			g_red = 0;
 			g_green = 0;
 			g_blue = 1;
@@ -145,9 +149,22 @@ void Object::Update(float elapsedTime)
 	g_y = g_y + g_vec_Y * elapsedTimeSec;
 	g_fireTime += elapsedTimeSec;
 	g_createTime += elapsedTimeSec;
-	g_sprite += 1;
-	g_particleTime += elapsedTimeSec;
 
+	//cout << "sp time " << g_spriteTime << endl;
+	//cout << "sprite " << g_sprite << endl;
+	if (g_spriteTime < 1)
+	{
+		g_spriteTime += 0.2;
+	}
+	else
+	{
+		g_sprite += 1;
+		g_spriteTime = 0;
+	}
+	if (g_particleTime < 1)
+		g_particleTime += elapsedTimeSec *0.1;
+	else
+		g_particleTime = 0;
 	if (g_type == OBJECT_BULLET || g_type == OBJECT_ARROW)
 	{
 		if (g_x > 250)
@@ -181,7 +198,6 @@ void Object::Update(float elapsedTime)
 	}
 	if (g_type == OBJECT_CHARACTER)
 	{
-		g_sprite += 1;
 		if (g_sprite > 5)
 			g_sprite = 0;
 	}

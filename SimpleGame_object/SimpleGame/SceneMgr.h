@@ -25,7 +25,8 @@ public:
 	~SceneMgr();
 	
 	float CreateCharTime = 0;
-	
+	float snowTime = 0;
+
 	void DrawObject();
 	void SetPosObject(float x, float y, int type, int team);
 	void SetPosBuilding();
